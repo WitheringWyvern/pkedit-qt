@@ -1,0 +1,39 @@
+name: Build pkedit-qt (macOS)
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+      with:
+        submodules: true
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: "5.15.2"
+        host: mac
+
+    - name: Build with CMake
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make -j$(sysctl -n hw.logicalcpu)
+
+    - name: Package .app
+      run: |
+        macdeployqt pkedit-qt.app || true
+        ditto -c -k --sequesterRsrc --keepParent pkedit-qt.app pkedit-qt-macos.zip
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: pkedit-qt-macos
+        path: pkedit-qt-macos.zip

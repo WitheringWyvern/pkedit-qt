@@ -1,0 +1,14 @@
+Checks: >
+  modernize-*,
+  cppcoreguidelines-*,
+  concurrency-*,
+  performance-*,
+  portability-*,
+  bugprone-*,
+  cert-*,
+  clang-analyzer-*,
+  misc-*,
+  -cppcoreguidelines-avoid-magic-numbers
+WarningsAsErrors: ''
+HeaderFilterRegex: ''
+FormatStyle: 'file'
