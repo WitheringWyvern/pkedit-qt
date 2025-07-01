@@ -29,11 +29,12 @@ jobs:
 
     - name: Package .app
       run: |
+        cd build
         macdeployqt pkedit-qt.app || true
-        ditto -c -k --sequesterRsrc --keepParent pkedit-qt.app pkedit-qt-macos.zip
+        ditto -c -k --sequesterRsrc --keepParent pkedit-qt.app ../pkedit-qt-macos.zip
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: pkedit-qt-macos
         path: pkedit-qt-macos.zip
